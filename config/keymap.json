@@ -1,0 +1,231 @@
+[
+  {
+    "id": "k1",
+    "keyLabel": "1",
+    "row": 1,
+    "col": 1,
+    "name": "Launch Terminal",
+    "actionType": "app",
+    "settings": {
+      "path": "x-terminal-emulator",
+      "args": "",
+      "testMode": false
+    }
+  },
+  {
+    "id": "k2",
+    "keyLabel": "2",
+    "row": 1,
+    "col": 2,
+    "name": "Copy",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "c"
+      ],
+      "label": "Ctrl + C"
+    }
+  },
+  {
+    "id": "k3",
+    "keyLabel": "3",
+    "row": 1,
+    "col": 3,
+    "name": "Paste",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "v"
+      ],
+      "label": "Ctrl + V"
+    }
+  },
+  {
+    "id": "k4",
+    "keyLabel": "A",
+    "row": 1,
+    "col": 4,
+    "name": "Right",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "right"
+      ],
+      "label": "Right"
+    }
+  },
+  {
+    "id": "k5",
+    "keyLabel": "4",
+    "row": 2,
+    "col": 1,
+    "name": "Select All",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "a"
+      ],
+      "label": "Ctrl + A"
+    }
+  },
+  {
+    "id": "k6",
+    "keyLabel": "5",
+    "row": 2,
+    "col": 2,
+    "name": "Close",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "alt",
+        "f4"
+      ],
+      "label": "Alt + F4"
+    }
+  },
+  {
+    "id": "k7",
+    "keyLabel": "6",
+    "row": 2,
+    "col": 3,
+    "name": "New Tab",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "t"
+      ],
+      "label": "Ctrl + T"
+    }
+  },
+  {
+    "id": "k8",
+    "keyLabel": "B",
+    "row": 2,
+    "col": 4,
+    "name": "Close Tab",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "w"
+      ],
+      "label": "Ctrl + W"
+    }
+  },
+  {
+    "id": "k9",
+    "keyLabel": "7",
+    "row": 3,
+    "col": 1,
+    "name": "Browser",
+    "actionType": "app",
+    "settings": {
+      "path": "xdg-open",
+      "args": "https://www.youtube.com/watch?v=z0I9wUCCkgU"
+    }
+  },
+  {
+    "id": "k10",
+    "keyLabel": "8",
+    "row": 3,
+    "col": 2,
+    "name": "Switch App",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "alt",
+        "tab"
+      ],
+      "label": "Alt + Tab"
+    }
+  },
+  {
+    "id": "k11",
+    "keyLabel": "9",
+    "row": 3,
+    "col": 3,
+    "name": "Mute / Unmute",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "mute"
+      ],
+      "label": "Mute"
+    }
+  },
+  {
+    "id": "k12",
+    "keyLabel": "C",
+    "row": 3,
+    "col": 4,
+    "name": "Super",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "super"
+      ],
+      "label": "Super"
+    }
+  },
+  {
+    "id": "k13",
+    "keyLabel": "*",
+    "row": 4,
+    "col": 1,
+    "name": "Change Tabs",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "ctrl",
+        "tab"
+      ],
+      "label": "Ctrl + Tab"
+    }
+  },
+  {
+    "id": "k14",
+    "keyLabel": "0",
+    "row": 4,
+    "col": 2,
+    "name": "Play",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "play_pause"
+      ],
+      "label": "Play/Pause"
+    }
+  },
+  {
+    "id": "k15",
+    "keyLabel": "#",
+    "row": 4,
+    "col": 3,
+    "name": "Volume Up",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "volume_up"
+      ],
+      "label": "Vol Up"
+    }
+  },
+  {
+    "id": "k16",
+    "keyLabel": "D",
+    "row": 4,
+    "col": 4,
+    "name": "Volume Down",
+    "actionType": "shortcut",
+    "settings": {
+      "keys": [
+        "volume_down"
+      ],
+      "label": "Vol Down"
+    }
+  }
+]

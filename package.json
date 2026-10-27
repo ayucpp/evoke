@@ -1,0 +1,27 @@
+{
+  "name": "evoke",
+  "productName": "EVOKE",
+  "version": "1.0.0",
+  "description": "EVOKE — Desktop Companion for ESP32 Programmable Bluetooth Keypad",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron --no-sandbox .",
+    "test": "node tests/test_keymap_store.js && node tests/test_action_executor.js && .venv/bin/python3 tests/test_bt_bridge.py",
+    "test:store": "node tests/test_keymap_store.js",
+    "test:actions": "node tests/test_action_executor.js",
+    "test:bridge": ".venv/bin/python3 tests/test_bt_bridge.py"
+  },
+  "keywords": [
+    "esp32",
+    "keypad",
+    "bluetooth",
+    "electron",
+    "macro",
+    "automation"
+  ],
+  "author": "Ayush",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^32.3.3"
+  }
+}

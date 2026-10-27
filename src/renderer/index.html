@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVOKE</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">evoke</span>
+          <span class="brand-subtitle">4×4 Keypad Control</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <button class="nav-item active" data-tab="dashboard">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item" data-tab="mappings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+          <span>All Mappings</span>
+        </button>
+
+        <button class="nav-item" data-tab="settings">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Settings</span>
+        </button>
+
+        <button class="nav-item" data-tab="diagnostics">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span>Diagnostics</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Footer Status -->
+      <div class="sidebar-status">
+        <div class="status-indicator">
+          <span class="status-dot disconnected" id="sidebar-status-dot"></span>
+          <span class="status-label" id="sidebar-status-text">Disconnected</span>
+        </div>
+        <div class="device-mac-label" id="sidebar-mac-text">ESP32_Keypad</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title" id="page-title">Keypad Dashboard</h1>
+          <span class="page-subtitle" id="page-subtitle">Configure 16 programmable physical keys</span>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Hardware Telemetry Pill -->
+          <div class="telemetry-pill" title="Live keypad buffer stream">
+            <span class="pill-label">Active Key:</span>
+            <span class="pill-value highlight" id="telemetry-active-key">—</span>
+            <span class="pill-divider">|</span>
+            <span class="pill-label">Buffer:</span>
+            <span class="pill-value" id="telemetry-buffer">(empty)</span>
+            <button class="icon-btn-subtle" id="btn-clear-buffer" title="Send CLEAR to ESP32">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Connection Status Badge -->
+          <div class="connection-badge disconnected" id="connection-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text" id="badge-status-text">Disconnected</span>
+            <button class="btn-reconnect" id="btn-reconnect-quick" title="Attempt reconnection">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M23 4v6h-6"></path>
+                <path d="M1 20v-6h6"></path>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="view-container">
+        <!-- 1. DASHBOARD VIEW -->
+        <section class="view-panel active" id="view-dashboard">
+          <div class="dashboard-layout">
+            <!-- Left: 4x4 Keypad Visualization -->
+            <div class="keypad-section">
+              <div class="section-header">
+                <div>
+                  <h2 class="section-title">Physical 4×4 Matrix Layout</h2>
+                  <p class="section-description">Click any key tile to inspect and configure its action</p>
+                </div>
+                <div class="layout-meta">
+                  <span class="badge-tag">ESP32 GPIO Matrix (4 Rows × 4 Cols)</span>
+                </div>
+              </div>
+
+              <!-- 4x4 Grid of 16 Tiles -->
+              <div class="matrix-grid" id="matrix-grid">
+                <!-- Dynamically populated 16 tiles -->
+              </div>
+
+              <div class="keypad-legend">
+                <span class="legend-item"><span class="dot app"></span> Launch App</span>
+                <span class="legend-item"><span class="dot shortcut"></span> Shortcut</span>
+                <span class="legend-item"><span class="dot macro"></span> Macro</span>
+                <span class="legend-item"><span class="dot python"></span> Python</span>
+                <span class="legend-item"><span class="dot unassigned"></span> Unassigned</span>
+              </div>
+            </div>
+
+            <!-- Right: Selected Key Configuration Inspector -->
+            <div class="inspector-section" id="inspector-section">
+              <div class="inspector-card">
+                <div class="inspector-header">
+                  <div class="inspector-key-badge">
+                    <span class="key-id-badge" id="insp-key-id">K1</span>
+                    <span class="phys-key-badge" id="insp-phys-key">Key '1'</span>
+                  </div>
+                  <div class="inspector-actions">
+                    <button class="btn-subtle" id="btn-test-action" title="Test action right now">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span>Test Action</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Form -->
+                <form id="key-config-form" class="config-form" onsubmit="return false;">
+                  <!-- Display Name -->
+                  <div class="form-group">
+                    <label for="cfg-name" class="form-label">Display Name / Label</label>
+                    <input type="text" id="cfg-name" class="form-input" placeholder="e.g. Mute Microphone, Launch IDE">
+                  </div>
+
+                  <!-- Action Type Selector -->
+                  <div class="form-group">
+                    <label class="form-label">Action Type</label>
+                    <div class="action-type-tabs" id="action-type-tabs">
+                      <button type="button" class="tab-btn active" data-type="app">Launch App</button>
+                      <button type="button" class="tab-btn" data-type="shortcut">Shortcut</button>
+                      <button type="button" class="tab-btn" data-type="macro">Macro</button>
+                      <button type="button" class="tab-btn" data-type="python">Python</button>
+                      <button type="button" class="tab-btn" data-type="none">None</button>
+                    </div>
+                  </div>
+
+                  <!-- Dynamic Action Settings Panels -->
+                  <div class="action-settings-container">
+                    <!-- A. App Settings -->
+                    <div class="action-panel" id="panel-app">
+                      <div class="form-group">
+                        <label for="cfg-app-path" class="form-label">Application Executable or Command</label>
+                        <div class="input-with-action">
+                          <input type="text" id="cfg-app-path" class="form-input" placeholder="e.g. gnome-calculator or /usr/bin/code">
+                          <button type="button" class="btn-secondary" id="btn-browse-app">Browse</button>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="cfg-app-args" class="form-label">Command Line Arguments (Optional)</label>
+                        <input type="text" id="cfg-app-args" class="form-input" placeholder="e.g. --new-window or -v">
+                      </div>
+                    </div>
+
+                    <!-- B. Shortcut Settings -->
+                    <div class="action-panel" id="panel-shortcut">
+                      <div class="form-group">
+                        <label class="form-label">Active Key Combination</label>
+                        <div class="shortcut-recorder-box">
+                          <div class="shortcut-keys-display" id="shortcut-badge-container">
+                            <span class="key-chip">Ctrl</span>
+                            <span class="key-chip-plus">+</span>
+                            <span class="key-chip">C</span>
+                          </div>
+                          <button type="button" class="btn-secondary" id="btn-record-shortcut">Record Shortcut</button>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="cfg-shortcut-manual" class="form-label">Manual Key Entry (e.g. F3, Ctrl+F3, VolumeUp)</label>
+                        <div class="input-with-action">
+                          <input type="text" id="cfg-shortcut-manual" class="form-input" placeholder="Type key e.g. F3 or Alt+Tab">
+                          <button type="button" class="btn-secondary" id="btn-apply-manual-shortcut">Set Key</button>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-label">Quick Presets & Function Keys</label>
+                        <select id="cfg-shortcut-preset" class="form-select">
+                          <option value="">-- Choose Key or Shortcut --</option>
+                          <optgroup label="Function Keys">
+                            <option value="f1">F1</option>
+                            <option value="f2">F2</option>
+                            <option value="f3">F3</option>
+                            <option value="f4">F4</option>
+                            <option value="f5">F5 (Refresh)</option>
+                            <option value="f6">F6</option>
+                            <option value="f7">F7</option>
+                            <option value="f8">F8</option>
+                            <option value="f9">F9</option>
+                            <option value="f10">F10</option>
+                            <option value="f11">F11 (Fullscreen)</option>
+                            <option value="f12">F12</option>
+                          </optgroup>
+                          <optgroup label="Function Keys with Modifiers">
+                            <option value="ctrl+f3">Ctrl + F3</option>
+                            <option value="alt+f4">Alt + F4 (Close Window)</option>
+                            <option value="shift+f3">Shift + F3</option>
+                            <option value="ctrl+f5">Ctrl + F5 (Hard Reload)</option>
+                          </optgroup>
+                          <optgroup label="Common Shortcuts">
+                            <option value="ctrl+c">Ctrl + C (Copy)</option>
+                            <option value="ctrl+v">Ctrl + V (Paste)</option>
+                            <option value="ctrl+x">Ctrl + X (Cut)</option>
+                            <option value="ctrl+s">Ctrl + S (Save)</option>
+                            <option value="ctrl+z">Ctrl + Z (Undo)</option>
+                            <option value="ctrl+y">Ctrl + Y (Redo)</option>
+                            <option value="ctrl+a">Ctrl + A (Select All)</option>
+                            <option value="alt+tab">Alt + Tab (Switch Window)</option>
+                            <option value="super+l">Super + L (Lock Screen)</option>
+                            <option value="super+d">Super + D (Show Desktop)</option>
+                          </optgroup>
+                          <optgroup label="Media & Audio Controls">
+                            <option value="volume_up">Volume Up</option>
+                            <option value="volume_down">Volume Down</option>
+                            <option value="mute">Mute / Unmute</option>
+                            <option value="play_pause">Play / Pause</option>
+                            <option value="next_track">Next Track</option>
+                            <option value="prev_track">Previous Track</option>
+                          </optgroup>
+                        </select>
+                      </div>
+
+                      <div class="env-notice">
+                        <small>💡 <strong>Laptop Fn Keys:</strong> On many laptops, the <code>Fn</code> key is hardware-switched and does not transmit a keycode to the OS. If pressing <code>Fn+F3</code> emits a volume or brightness change on your laptop, use the <strong>Manual Key Entry</strong> or <strong>Presets</strong> dropdown to directly select <strong>F3</strong> or <strong>Volume Up</strong>!</small>
+                      </div>
+                    </div>
+
+                    <!-- C. Macro Settings -->
+                    <div class="action-panel" id="panel-macro">
+                      <div class="macro-builder">
+                        <div class="macro-header">
+                          <span class="macro-title">Macro Sequence</span>
+                          <div class="macro-add-controls">
+                            <button type="button" class="btn-xs" id="btn-add-step-app">+ App</button>
+                            <button type="button" class="btn-xs" id="btn-add-step-key">+ Key</button>
+                            <button type="button" class="btn-xs" id="btn-add-step-delay">+ Delay</button>
+                          </div>
+                        </div>
+                        <div class="macro-step-list" id="macro-step-list">
+                          <!-- Populated dynamically -->
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- D. Python Settings -->
+                    <div class="action-panel" id="panel-python">
+                      <div class="form-group">
+                        <label for="cfg-py-path" class="form-label">Python Script File (.py)</label>
+                        <div class="input-with-action">
+                          <input type="text" id="cfg-py-path" class="form-input" placeholder="/path/to/script.py">
+                          <button type="button" class="btn-secondary" id="btn-browse-py">Browse</button>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="cfg-py-args" class="form-label">Script Arguments (Optional)</label>
+                        <input type="text" id="cfg-py-args" class="form-input" placeholder="e.g. --summary or --device eth0">
+                      </div>
+                      <div class="form-group">
+                        <label for="cfg-py-interp" class="form-label">Interpreter</label>
+                        <input type="text" id="cfg-py-interp" class="form-input" value="python3" placeholder="python3 or /path/to/venv/bin/python3">
+                      </div>
+                    </div>
+
+                    <!-- E. None Settings -->
+                    <div class="action-panel" id="panel-none">
+                      <div class="unassigned-notice">
+                        <p>This key is currently unassigned. It will register keystrokes in the buffer without triggering laptop actions.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Test Run Output Card -->
+                  <div class="test-result-box" id="test-result-box" style="display: none;">
+                    <div class="result-header">
+                      <span class="result-status-badge" id="test-result-badge">SUCCESS</span>
+                      <span class="result-time" id="test-result-time">12ms</span>
+                    </div>
+                    <pre class="result-output" id="test-result-output"></pre>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="form-actions">
+                    <button type="button" class="btn-primary" id="btn-save-key">Save Mapping</button>
+                    <button type="button" class="btn-secondary" id="btn-reset-single-key">Reset Key</button>
+                    <button type="button" class="btn-danger-subtle" id="btn-clear-mapping">Clear Action</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. ALL MAPPINGS VIEW -->
+        <section class="view-panel" id="view-mappings">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h2 class="section-title">Key Mapping Overview</h2>
+                <p class="section-description">Review and manage all 16 key actions in a tabular layout</p>
+              </div>
+              <div class="table-actions">
+                <button class="btn-secondary" id="btn-export-keymap">Export JSON</button>
+                <button class="btn-secondary" id="btn-import-keymap">Import JSON</button>
+                <button class="btn-danger-subtle" id="btn-reset-all-keys">Reset All to Default</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="keymap-table">
+                <thead>
+                  <tr>
+                    <th>Key ID</th>
+                    <th>Matrix Pin</th>
+                    <th>Display Name</th>
+                    <th>Action Type</th>
+                    <th>Details</th>
+                    <th>Quick Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="mappings-table-body">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. SETTINGS VIEW -->
+        <section class="view-panel" id="view-settings">
+          <div class="settings-grid">
+            <!-- Hardware / Bluetooth Settings -->
+            <div class="panel-card">
+              <h3 class="card-title">Bluetooth & Hardware Settings</h3>
+              <div class="form-group">
+                <label for="set-target-mac" class="form-label">ESP32 Bluetooth MAC Address</label>
+                <div class="input-with-action">
+                  <input type="text" id="set-target-mac" class="form-input" placeholder="28:05:A5:E2:18:96">
+                  <button type="button" class="btn-secondary" id="btn-save-mac">Save & Connect</button>
+                </div>
+                <small class="form-hint">Stored in <code>.esp32_mac</code> for zero-config auto connection.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="set-debounce" class="form-label">Key Debounce Threshold (ms)</label>
+                <input type="number" id="set-debounce" class="form-input" value="250" min="50" max="1000">
+                <small class="form-hint">Prevents accidental repeated triggers on tactile keypad presses.</small>
+              </div>
+
+              <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="set-autoconnect" checked>
+                  <span>Auto-connect to ESP32 on application startup</span>
+                </label>
+              </div>
+
+              <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="set-simulation">
+                  <span>Enable Simulation Mode (Allows clicking keypad tiles to trigger actions without hardware)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Environment & Appearance -->
+            <div class="panel-card">
+              <h3 class="card-title">Environment & Preferences</h3>
+              <div class="form-group">
+                <label for="set-theme-select" class="form-label">Theme Mode</label>
+                <select id="set-theme-select" class="form-select">
+                  <option value="dark">Near Black (Dark Theme)</option>
+                  <option value="light">Off-White (Light Theme)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="set-python-bin" class="form-label">Default Python Interpreter</label>
+                <input type="text" id="set-python-bin" class="form-input" value="python3" placeholder="python3 or /path/to/.venv/bin/python3">
+                <small class="form-hint">Used to run local Python scripts and pynput automation.</small>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn-primary" id="btn-save-general-settings">Save Preferences</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. DIAGNOSTICS VIEW -->
+        <section class="view-panel" id="view-diagnostics">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div>
+                <h3 class="section-title">Hardware Telemetry & Event Log</h3>
+                <p class="section-description">Real-time log of Bluetooth socket states, key events, and action executions</p>
+              </div>
+              <div>
+                <button class="btn-subtle" id="btn-clear-logs">Clear Logs</button>
+              </div>
+            </div>
+            <div class="log-stream-box" id="log-stream">
+              <div class="log-entry info"><span class="log-time">[Init]</span> EVOKE interface initialized. Ready.</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

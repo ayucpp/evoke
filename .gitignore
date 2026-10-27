@@ -1,0 +1,23 @@
+# Node dependencies
+node_modules/
+package-lock.json
+
+# Python virtual environment & bytecode
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Electron / Chromium runtime files
+Singleton*
+*.log
+
+# Test temporary files
+tests/temp_config/
+
+# OS files
+.DS_Store
+Thumbs.db

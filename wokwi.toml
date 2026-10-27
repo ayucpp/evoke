@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = "esp32_keypad_web.ino"
+elf = ""
